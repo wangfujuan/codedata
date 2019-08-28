@@ -1,0 +1,54 @@
+body{
+    overflow: hidden;
+}
+.wrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../../assets/login_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: scale(1.2);
+    filter: blur(3px);
+    &::after{
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .2);
+    }
+}
+.registbox{
+    z-index: 99;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    margin-left: -185px;
+    transform: translateY(-60%);
+    background-color: #fff;
+    padding: 30px 50px;
+    border-radius: 5px;
+    // margin: auto;
+    .logo{
+        width: 150px;
+        display: block;
+        margin: 0 auto 30px;
+    }
+    .title{
+        margin-bottom: 20px;
+    }
+    .submit {
+        width: 50%;
+    }
+    // .loginsubmit{
+    //     width: 100%;
+    // }
+    .login {
+        float: right;
+    }
+}
