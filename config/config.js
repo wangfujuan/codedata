@@ -101,7 +101,7 @@ export default {
               path: '/user/login',
               component: './user/login',
             },
-          ]
+          ],
         },
         {
           path: '/',
@@ -109,6 +109,10 @@ export default {
           Routes: ['src/pages/Authorized'],
           authority: ['admin', 'user'],
           routes: [
+            {
+              path: '/',
+              redirect: '/web',
+            },
             {
               path: '/web',
               name: '前端工程师',
@@ -166,12 +170,11 @@ export default {
             },
             {
               component: './404',
-            },  
+            },
           ],
-        },  
-      ]
+        },
+      ],
     },
-    
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
