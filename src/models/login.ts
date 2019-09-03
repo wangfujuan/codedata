@@ -5,7 +5,7 @@ import { stringify } from 'querystring';
 
 import { userLogin, getFakeCaptcha } from '@/services/user';
 import { setAuthority } from '@/utils/authority';
-// import { getPageQuery } from '@/utils/utils';
+import { getPageQuery } from '@/utils/utils';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -42,22 +42,22 @@ const Model: LoginModelType = {
       });
       // Login successfully
       if (response.code === 200) {
-        // const urlParams = new URL(window.location.href);
-        // const params = getPageQuery();
-        // let { redirect } = params as { redirect: string };
-        // if (redirect) {
-        //   const redirectUrlParams = new URL(redirect);
-        //   if (redirectUrlParams.origin === urlParams.origin) {
-        //     redirect = redirect.substr(urlParams.origin.length);
-        //     if (redirect.match(/^\/.*#/)) {
-        //       redirect = redirect.substr(redirect.indexOf('#') + 1);
-        //     }
-        //   } else {
-        //     window.location.href = redirect;
-        //     return;
-        //   }
-        // }
-        // yield put(routerRedux.replace(redirect || '/'));
+        const urlParams = new URL(window.location.href); //常量
+        const params = getPageQuery();
+        let { redirect } = params as { redirect: string }; //变量
+        if (redirect) {
+          const redirectUrlParams = new URL(redirect);
+          if (redirectUrlParams.origin === urlParams.origin) {
+            redirect = redirect.substr(urlParams.origin.length);
+            if (redirect.match(/^\/.*#/)) {
+              redirect = redirect.substr(redirect.indexOf('#') + 1);
+            }
+          } else {
+            window.location.href = redirect;
+            return;
+          }
+        }
+        yield put(routerRedux.replace(redirect || '/'));
       }
     },
 
@@ -66,10 +66,10 @@ const Model: LoginModelType = {
     },
     *logout(_, { put }) {
       console.log('退出登录1');
-      // const { redirect } = getPageQuery();
+      const { redirect } = getPageQuery();
       console.log('退出登录2');
       // redirect
-      if (window.location.pathname !== '/user/login') {
+      if (window.location.pathname !== '/user/login' && !redirect) {
         yield put(
           routerRedux.replace({
             pathname: '/user/login',
