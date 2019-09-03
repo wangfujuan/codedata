@@ -5,7 +5,7 @@ import { stringify } from 'querystring';
 
 import { userLogin, getFakeCaptcha } from '@/services/user';
 import { setAuthority } from '@/utils/authority';
-import { getPageQuery } from '@/utils/utils';
+// import { getPageQuery } from '@/utils/utils';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -42,24 +42,22 @@ const Model: LoginModelType = {
       });
       // Login successfully
       if (response.code === 200) {
-        const urlParams = new URL(window.location.href);
-        console.log(urlParams);
-        const params = getPageQuery();
-        console.log(params);
-        let { redirect } = params as { redirect: string };
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            window.location.href = redirect;
-            return;
-          }
-        }
-        yield put(routerRedux.replace(redirect || '/'));
+        // const urlParams = new URL(window.location.href);
+        // const params = getPageQuery();
+        // let { redirect } = params as { redirect: string };
+        // if (redirect) {
+        //   const redirectUrlParams = new URL(redirect);
+        //   if (redirectUrlParams.origin === urlParams.origin) {
+        //     redirect = redirect.substr(urlParams.origin.length);
+        //     if (redirect.match(/^\/.*#/)) {
+        //       redirect = redirect.substr(redirect.indexOf('#') + 1);
+        //     }
+        //   } else {
+        //     window.location.href = redirect;
+        //     return;
+        //   }
+        // }
+        // yield put(routerRedux.replace(redirect || '/'));
       }
     },
 

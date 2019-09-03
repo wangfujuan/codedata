@@ -14,12 +14,15 @@ export async function queryTest() {
 export async function userRegister(params) {
   return request('/server/add_user', {
     method: 'POST',
-    body: params
+    body: params,
   });
 }
 export async function userLogin(params) {
   return request('/server/login', {
     method: 'POST',
-    body: params
+    body: params,
   });
+}
+export async function getFakeCaptcha() {
+  // return request(`/api/login/captcha?mobile=${mobile}`);
 }
