@@ -65,9 +65,7 @@ const Model: LoginModelType = {
       yield call(getFakeCaptcha, payload);
     },
     *logout(_, { put }) {
-      console.log('退出登录1');
       const { redirect } = getPageQuery();
-      console.log('退出登录2');
       // redirect
       if (window.location.pathname !== '/user/login' && !redirect) {
         yield put(
