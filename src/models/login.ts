@@ -65,6 +65,7 @@ const Model: LoginModelType = {
       yield call(getFakeCaptcha, payload);
     },
     *logout(_, { put }) {
+      localStorage.clear();
       const { redirect } = getPageQuery();
       // redirect
       if (window.location.pathname !== '/user/login' && !redirect) {
@@ -82,11 +83,12 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      setAuthority('user');
+      localStorage.setItem('email', payload.list.email);
       return {
         ...state,
-        status: payload.status,
-        type: payload.type,
+        status: 'ok',
+        type: 'account',
       };
     },
   },

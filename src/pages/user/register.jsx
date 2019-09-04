@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Form, Input, Button } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
+// import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 import logo from '../../assets/diggo.png';
 import styles from './style.less';
@@ -110,7 +110,7 @@ class Register extends PureComponent{
                             <Button className={styles.submit} type="primary" htmlType="submit" size="large">
                                 注册
                             </Button>
-                            <Link className={styles.login} to='/user/login'><FormattedMessage id="使用已有账号登录" /></Link>
+                            <Link className={styles.login} to='/user/login'>使用已有账号登录</Link>
                         </Form.Item>
                     </Form>
                 </div>

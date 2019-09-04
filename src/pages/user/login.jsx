@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Form, Input, Button } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
+// import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 import logo from '../../assets/diggo.png';
 import styles from './style.less';
@@ -77,7 +77,7 @@ class LoginBox extends PureComponent {
                 登录
               </Button>
               <Link className={styles.login} to="/user/register">
-                <FormattedMessage id="注册账户" />
+                注册账户
               </Link>
             </Form.Item>
           </Form>
