@@ -7,9 +7,9 @@ import Link from 'umi/link';
 import { RouteChildrenProps } from 'react-router';
 import { connect } from 'dva';
 import { ModalState } from './model';
-import Projects from './components/Projects';
+// import Projects from './components/Projects';
 import Articles from './components/Articles';
-import Applications from './components/Applications';
+// import Applications from './components/Applications';
 import { CurrentUser, TagType } from './data.d';
 import styles from './Center.less';
 
@@ -22,22 +22,22 @@ const operationTabList = [
       </span>
     ),
   },
-  {
-    key: 'applications',
-    tab: (
-      <span>
-        应用 <span style={{ fontSize: 14 }}>(8)</span>
-      </span>
-    ),
-  },
-  {
-    key: 'projects',
-    tab: (
-      <span>
-        项目 <span style={{ fontSize: 14 }}>(8)</span>
-      </span>
-    ),
-  },
+  // {
+  //   key: 'applications',
+  //   tab: (
+  //     <span>
+  //       应用 <span style={{ fontSize: 14 }}>(8)</span>
+  //     </span>
+  //   ),
+  // },
+  // {
+  //   key: 'projects',
+  //   tab: (
+  //     <span>
+  //       项目 <span style={{ fontSize: 14 }}>(8)</span>
+  //     </span>
+  //   ),
+  // },
 ];
 
 interface CenterProps extends RouteChildrenProps {
@@ -64,10 +64,7 @@ interface CenterState {
     currentUserLoading: loading.effects['accountCenter/fetchCurrent'],
   }),
 )
-class Center extends PureComponent<
-  CenterProps,
-  CenterState
-> {
+class Center extends PureComponent<CenterProps, CenterState> {
   // static getDerivedStateFromProps(
   //   props: accountCenterProps,
   //   state: accountCenterState,
@@ -141,12 +138,12 @@ class Center extends PureComponent<
   };
 
   renderChildrenByTabKey = (tabKey: CenterState['tabKey']) => {
-    if (tabKey === 'projects') {
-      return <Projects />;
-    }
-    if (tabKey === 'applications') {
-      return <Applications />;
-    }
+    // if (tabKey === 'projects') {
+    //   return <Projects />;
+    // }
+    // if (tabKey === 'applications') {
+    //   return <Applications />;
+    // }
     if (tabKey === 'articles') {
       return <Articles />;
     }

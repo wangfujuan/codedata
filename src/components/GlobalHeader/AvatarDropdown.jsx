@@ -6,6 +6,7 @@ import router from 'umi/router';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 import logo from '../../assets/logo.png';
+import Link from 'umi/link';
 
 class AvatarDropdown extends React.Component {
   onMenuClick = event => {
@@ -28,12 +29,15 @@ class AvatarDropdown extends React.Component {
 
   render() {
     // const { currentUser = {}, menu } = this.props;
-    const useremail = localStorage.getItem('email')
-    if (!useremail) {
+    const nickName = localStorage.getItem('nickName');
+    if (!nickName) {
       return (
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-          <span className={styles.name}>登录/注册</span>
+          <Avatar size="small" className={styles.avatar} src={logo} alt="avatar" />
+          <Link className={styles.name} to="/user/login">
+            登录/注册
+          </Link>
+          {/* <span className={styles.name}></span> */}
         </span>
       );
     }
@@ -55,11 +59,11 @@ class AvatarDropdown extends React.Component {
         </Menu.Item>
       </Menu>
     );
-    return useremail ? (
+    return nickName ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
           <Avatar size="small" className={styles.avatar} src={logo} alt="avatar" />
-          <span className={styles.name}>{useremail}</span>
+          <span className={styles.name}>{nickName}</span>
         </span>
       </HeaderDropdown>
     ) : (

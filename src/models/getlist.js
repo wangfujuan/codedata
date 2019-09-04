@@ -1,6 +1,6 @@
 // import { parse, stringify } from 'qs';
 // import { routerRedux } from 'dva/router';
-import { queryTest } from '@/services/user';
+import { getArticleList } from '@/services/article';
 // export function getPageQuery() {
 //   return parse(window.location.href.split('?')[1]);
 // }
@@ -11,20 +11,20 @@ const GetListModal = {
   },
   effects: {
     *fetch({ payload }, { call, put }) {
-        const response = yield call(queryTest, payload);
-        yield put({
-            type: 'save',
-            payload: response
-        })
-    }
+      const response = yield call(getArticleList, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+    },
   },
   reducers: {
-    save( state, action ) {
-        return {
-            ...state,
-            data: action.payload
-        }
-    }
+    save(state, action) {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    },
   },
 };
 export default GetListModal;

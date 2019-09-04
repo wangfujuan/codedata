@@ -84,7 +84,8 @@ const Model: LoginModelType = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority('user');
-      localStorage.setItem('email', payload.list.email);
+      localStorage.setItem('userid', payload.list.id);
+      localStorage.setItem('nickName', payload.list.nickname);
       return {
         ...state,
         status: 'ok',

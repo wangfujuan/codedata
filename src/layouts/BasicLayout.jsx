@@ -37,7 +37,7 @@ const footerRender = (_, defaultDom) => {
         <svg
           viewBox="64 64 896 896"
           focusable="false"
-          class=""
+          // class=""
           data-icon="copyright"
           width="1em"
           height="1em"

@@ -8,9 +8,9 @@ export async function queryCurrent() {
 export async function queryNotices() {
   return request('/api/notices');
 }
-export async function queryTest() {
-  return request('/server/article_list');
-}
+// export async function queryTest() {
+//   return request('/server/article_list');
+// }
 export async function userRegister(params) {
   return request('/server/add_user', {
     method: 'POST',
