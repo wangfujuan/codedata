@@ -25,23 +25,32 @@ import { connect } from 'dva';
 const { Option } = Select;
 const { TextArea } = Input;
 const AutoCompleteOption = AutoComplete.Option;
-const props = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} 上传成功`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} 上传失败`);
-    }
-  },
-};
+// const props = {
+//   name: 'file',
+//   action: '/server/upload',
+//   accept: 'application/zip',
+//   FileList: {FileList},
+//   headers: {
+//     authorization: 'authorization-text',
+//   },
+//   onChange(info) {
+//     // if (info.file.status === 'uploading' && info.type != 'application/zip'){
+//     //   message.info('请上传.zip的压缩包')
+//     // }
+
+//     console.log(info)
+//     // if (info.file.status !== 'uploading') {
+//     //   console.log(info.file, info.fileList);
+//     // }
+//     // if (info.file.status === 'done') {
+//     //   message.success(`${info.file.name} 上传成功`);
+
+//     //   // console.log('eeeeee'+this.state.isDisabled)
+//     // } else if (info.file.status === 'error') {
+//     //   message.error(`${info.file.name} 上传失败`);
+//     // }
+//   },
+// };
 
 @connect(releasearticle => ({ releasearticle, loading }) => ({
   msg: releasearticle.data,
@@ -50,6 +59,7 @@ const props = {
 class addArticle extends React.Component {
   state = {
     editorState: null,
+    fileList: [],
   };
   async componentDidMount() {
     // 假设此处从服务端获取html格式的编辑器内容
@@ -68,74 +78,88 @@ class addArticle extends React.Component {
   };
 
   handleEditorChange = editorState => {
-    console.log(editorState);
+    // console.log(editorState.toHTML());
     this.setState({ editorState });
   };
 
   handleSubmit = e => {
     e.preventDefault();
+    const { fileList } = this.state;
+    const { dispatch } = this.props;
+
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const { dispatch } = this.props;
-        const params = {
-          title: values.title,
-          content: '123',
-          file_url: values.file_url,
-          tid: '2',
-          uid: localStorage.getItem('userid'),
-          //   content: this.state.editorStates,
-
-          //   uid: localStorage.getItem('userid')
-        };
+        if (!values.title) {
+          message.info('标题不能为空');
+          return;
+        }
+        if (!this.state.editorState || this.state.editorState.toHTML() == '<p></p>') {
+          message.info('内容不能为空');
+          return;
+        }
         dispatch({
-          type: 'releasearticle/fetch',
-          payload: JSON.stringify(params),
+          type: 'uploadfile/fetch',
+          payload: JSON.stringify(fileList),
+          callback: data => {
+            const params = {
+              title: values.title,
+              content: this.state.editorState.toHTML(),
+              file_url: data.list,
+              tid: '2',
+              uid: localStorage.getItem('userid'),
+            };
+            dispatch({
+              type: 'releasearticle/fetch',
+              payload: JSON.stringify(params),
+            });
+            // console.log()
+          },
         });
+        // const { dispatch } = this.props;
       }
     });
   };
+  // handleChange = (e) => {
+  //   console.log(e)
+  //   if (e.file.status === 'uploading') {
+  //     message.success(`${e.file.name} 上传成功`);
+  //   }
+  // }
+  handleChange = ({ fileList }) => this.setState({ fileList });
   render() {
-    const { editorState } = this.state;
+    const { editorState, fileList } = this.state;
     const { getFieldDecorator } = this.props.form;
+    const uploadButton = (
+      <Button>
+        <Icon type="upload" /> 上传代码压缩包
+      </Button>
+    );
     return (
       <PageHeaderWrapper title="发布文章">
         <Card>
           <Form onSubmit={this.handleSubmit}>
             <Form.Item label="标题" labelCol={{ span: 2 }} wrapperCol={{ span: 10 }}>
-              {getFieldDecorator('title', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请填写标题',
-                  },
-                ],
-              })(<Input />)}
+              {getFieldDecorator('title')(<Input />)}
             </Form.Item>
-            {/* <Form.Item label="内容" labelCol={{span: 2}} wrapperCol={{span: 22}}> */}
-            {/* {getFieldDecorator('content', {
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: '请填写内容'
-                                    }
-                                ]
-                            })( */}
-            {/* <div className={styles.borderwp}>
-                                    <BraftEditor
-                                        value={editorState}
-                                        onChange={this.handleEditorChange}
-                                        onSave={this.submitContent}
-                                    />
-                                </div> */}
-            {/* )}   */}
-
-            {/* </Form.Item> */}
+            <Form.Item label="内容" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+              <div className={styles.borderwp}>
+                <BraftEditor
+                  value={editorState}
+                  onChange={this.handleEditorChange}
+                  onSave={this.submitContent}
+                />
+              </div>
+            </Form.Item>
             <Form.Item wrapperCol={{ offset: 2 }}>
               {getFieldDecorator('file_url')(
-                <Upload {...props}>
-                  <Button>
-                    <Icon type="upload" /> 上传代码压缩包
-                  </Button>
+                <Upload
+                  name="file"
+                  // action='/server/upload'
+                  accept="application/zip"
+                  fileList={fileList}
+                  onChange={this.handleChange}
+                >
+                  {fileList.length == 1 ? null : uploadButton}
                 </Upload>,
               )}
             </Form.Item>

@@ -77,12 +77,8 @@ class Test extends PureComponent {
                         <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                       }
                       title={<a href={item.href}>ant design part</a>}
-                      // description={item.addtime}
                     />
-                    We supply a series of design principles, practical patterns and high quality
-                    design resources (Sketch and Axure), to help people create their product
-                    prototypes beautifully and efficiently.
-                    {/* {item.content} */}
+                    <div dangerouslySetInnerHTML={{ __html: item.content }} />
                   </List.Item>
                 </div>
               </Col>
