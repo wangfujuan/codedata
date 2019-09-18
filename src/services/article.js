@@ -12,3 +12,11 @@ export async function releaseArticle(params) {
     body: params,
   });
 }
+
+export async function showArticle(params) {
+  // console.log('request')
+  return request('/server/detail', {
+    method: 'POST',
+    body: params,
+  });
+}

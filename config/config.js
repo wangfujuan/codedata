@@ -121,8 +121,11 @@ export default {
             },
             {
               path: '/web/addarticle',
-              icon: 'crown',
               component: './web/addArticle',
+            },
+            {
+              path: '/web/articleDetail',
+              component: './web/articleDetail',
             },
             {
               path: '/php',

@@ -1,7 +1,8 @@
-import { Card, List, Avatar, Icon, Row, Col, Button, Divider } from 'antd';
+import { Card, List, Avatar, Icon, Row, Col, Button, Divider, Tag } from 'antd';
 import React, { PureComponent } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
+import ArticleListContent from './components/ArticleListContent';
 import styles from './style.less';
 import Link from 'umi/link';
 
@@ -38,7 +39,16 @@ class Test extends PureComponent {
           发布
         </Link>
         {/* <a className="ant-btn ant-btn-primary" href="./web/addarticle"></a> */}
-        <Row gutter={16}>
+        {/* <Row gutter={16}> */}
+        <Card
+          style={{
+            marginTop: 24,
+          }}
+          bordered={false}
+          bodyStyle={{
+            padding: '8px 32px 32px 32px',
+          }}
+        >
           <List
             itemLayout="vertical"
             size="large"
@@ -52,39 +62,39 @@ class Test extends PureComponent {
             }}
             dataSource={list}
             renderItem={item => (
-              <Col span={12}>
-                <div
-                  style={{
-                    backgroundColor: '#fff',
-                    borderRadius: '2px',
-                    marginBottom: '16px',
-                    paddingLeft: '24px',
-                    paddingRight: '24px',
-                  }}
-                >
-                  <List.Item
-                    key={item.title}
-                    extra={
-                      <img
-                        width={272}
-                        alt="logo"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                      />
-                    }
-                  >
-                    <List.Item.Meta
-                      avatar={
-                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                      }
-                      title={<a href={item.href}>ant design part</a>}
-                    />
-                    <div dangerouslySetInnerHTML={{ __html: item.content }} />
-                  </List.Item>
-                </div>
-              </Col>
+              // <Col span={12}>
+              // <div
+              //   style={{
+              //     backgroundColor: '#fff',
+              //     borderRadius: '2px',
+              //     marginBottom: '16px',
+              //     paddingLeft: '24px',
+              //     paddingRight: '24px',
+              //   }}
+              // >
+              <List.Item key={item.title} extra={<img width={272} alt="logo" src={item.image} />}>
+                <List.Item.Meta
+                  // avatar={
+                  //   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                  // }
+                  title={<a href="/web/articledetail">{item.title}</a>}
+                  description={
+                    <span>
+                      <Tag>菜单</Tag>
+                      <Tag>动画</Tag>
+                      <Tag>CSS</Tag>
+                    </span>
+                  }
+                />
+                {/* <div dangerouslySetInnerHTML={{ __html: item.desp }} /> */}
+                <ArticleListContent data={item} />
+              </List.Item>
+              // </div>
+              // </Col>
             )}
           />
-        </Row>
+        </Card>
+        {/* </Row> */}
       </PageHeaderWrapper>
     );
   }
